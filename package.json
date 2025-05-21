@@ -1,7 +1,7 @@
 {
   "name": "dexmonitor",
   "version": "1.0.0",
-  "description": "",
+  "description": "Jupiter DEX trading monitor for cryptocurrency transactions",
   "homepage": "https://github.com/JackieKatz/dexmonitor#readme",
   "bugs": {
     "url": "https://github.com/JackieKatz/dexmonitor/issues"
@@ -15,6 +15,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.91.0",
+    "axios": "^1.6.0",
+    "ws": "^8.16.0"
   }
 }
