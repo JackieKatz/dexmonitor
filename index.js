@@ -212,19 +212,33 @@ class JupiterMonitor {
 }
 
 if (require.main === module) {
-    const config = {
-        targetToken: process.env.TARGET_TOKEN || null,
-        rpcEndpoint: process.env.RPC_ENDPOINT || null
-    };
-
-    const monitor = new JupiterMonitor(config);
+    const readline = require('readline');
     
-    process.on('SIGINT', () => {
-        monitor.stop();
-        process.exit(0);
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
     });
+
+    console.log('🚀 Jupiter DEX Monitor');
+    console.log('Enter token contract address to monitor (or press Enter to monitor all tokens):');
     
-    monitor.start().catch(console.error);
+    rl.question('Token Contract: ', (tokenContract) => {
+        rl.close();
+        
+        const config = {
+            targetToken: tokenContract.trim() || process.env.TARGET_TOKEN || null,
+            rpcEndpoint: process.env.RPC_ENDPOINT || null
+        };
+
+        const monitor = new JupiterMonitor(config);
+        
+        process.on('SIGINT', () => {
+            monitor.stop();
+            process.exit(0);
+        });
+        
+        monitor.start().catch(console.error);
+    });
 }
 
 module.exports = JupiterMonitor;
